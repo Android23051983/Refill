@@ -1,0 +1,134 @@
+﻿<Window x:Class="Refill.MainWindow"
+        x:Name="MainWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Refill"
+        mc:Ignorable="d"
+        Title="Заправочный комплекс Лукойл" Height="450" Width="800"
+        WindowState="Maximized"
+        ResizeMode="NoResize"
+        Icon="/Luk.png"
+        Background="LightSlateGray">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                                <Setter Property="BorderThickness" Value="10"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <!--<Setter Property="Background" TargetName="border" Value="Gray"/>-->
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="LightGray"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <RoutedUICommand x:Key="cmd1"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd2"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd3"></RoutedUICommand>
+        
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource cmd1}" Executed="ServiceBtn_Click"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd2}" Executed="CancelBtn_Click"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd3}" Executed="CashierBtn_Click"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="F10" Command="{StaticResource cmd1}"></KeyBinding>
+        <KeyBinding Key="F9" Command="{StaticResource cmd2}"></KeyBinding>
+        <KeyBinding Key="F2" Command="{StaticResource cmd3}"></KeyBinding>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.40*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Автозаправка" FontSize="24" BorderBrush="LightGray" BorderThickness="1" Margin="5,0,1,0" FontWeight="Medium">
+                <Image >
+                    <Image.Source>
+                        <FormatConvertedBitmap Source="Заправка.jpg" DestinationFormat="Gray4"/>
+                    </Image.Source>
+                </Image>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Header="Мини-Кафе" FontSize="24" BorderBrush="LightGray" BorderThickness="1" Margin="1,0,5,0" FontWeight="Medium">
+                <Image>
+                    <Image.Source>
+                        <FormatConvertedBitmap Source="Мини-кафе.jpg" DestinationFormat="Gray4"/>
+                    </Image.Source>
+                </Image >
+            </GroupBox>
+        
+        <GroupBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Header="ИТОГО К ОПЛАТЕ" FontSize="24" BorderBrush="LightGray" BorderThickness="1" Margin="5,0,5,0" FontWeight="Bold"/>
+        
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Left" Margin="5,0,0,1" Orientation="Horizontal">
+            <Button Style="{DynamicResource MyButtonStyle}"  HorizontalAlignment="Left" FontSize="14" Width="150" Height="65" Margin="5,0,0,0" Click="ServiceBtn_Click" >
+                <TextBlock Text="Сервисное обслуживание (F10)" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="15" TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"/>
+            </Button>
+            <Button Style="{DynamicResource MyButtonStyle}"  HorizontalAlignment="Left" FontSize="14" Width="150" Height="65" Margin="5,0,0,0" Click="CancelBtn_Click">
+                <TextBlock Text="Отмена продажи (F9)" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="15" TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"/>
+            </Button>
+            <Button Style="{DynamicResource MyButtonStyle}"  HorizontalAlignment="Left" FontSize="14" Width="150" Height="65" Margin="5,0,0,0" >
+                <TextBlock Text="Чат техподдержки (F1)" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="15" TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"/>
+            </Button>
+            <Button Style="{DynamicResource MyButtonStyle}"  HorizontalAlignment="Left" FontSize="14" Width="150" Height="65" Margin="5,0,0,0" Click="CashierBtn_Click">
+                <TextBlock Text="Смена кассира  Блокировка ПО (F2)" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="15" TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Bottom"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
+
